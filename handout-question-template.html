@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「AIへの聞き方」型ミニ資料 — 第4回 AI活用サポート オフ会</title>
+<style>
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #1f2937;
+    --color-muted: #6b7280;
+    --color-accent: #2563eb;
+    --color-accent-soft: #eff6ff;
+    --color-good: #15803d;
+    --color-good-soft: #ecfdf5;
+    --color-bad: #b91c1c;
+    --color-bad-soft: #fef2f2;
+    --color-border: #e5e7eb;
+    --color-code-bg: #f8fafc;
+    --color-highlight: #fef3c7;
+    --max-width: 780px;
+    --radius: 8px;
+    --font-jp: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+    --font-mono: 'SF Mono', 'Consolas', 'Menlo', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-jp);
+    color: var(--color-text);
+    background: #f3f4f6;
+    margin: 0;
+    padding: 32px 16px;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+    padding: 48px 56px;
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+  }
+
+  header.doc-header {
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+  }
+  header.doc-header h1 {
+    font-size: 26px;
+    margin: 0 0 8px;
+    letter-spacing: 0.02em;
+    color: #111827;
+  }
+  header.doc-header .meta {
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  h2 {
+    font-size: 19px;
+    margin: 36px 0 14px;
+    padding: 6px 0 6px 12px;
+    border-left: 4px solid var(--color-accent);
+    color: #111827;
+  }
+  h2 .num {
+    color: var(--color-accent);
+    margin-right: 8px;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 16px;
+    margin: 22px 0 8px;
+    color: #1f2937;
+  }
+
+  p { margin: 8px 0; }
+
+  .lead {
+    background: var(--color-accent-soft);
+    border-left: 4px solid var(--color-accent);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 0 0 28px;
+    font-size: 14.5px;
+  }
+  .lead strong { color: var(--color-accent); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid var(--color-border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background: #f9fafb;
+    font-weight: 600;
+    width: 50%;
+  }
+
+  .compare th.bad, .compare td.bad {
+    background: var(--color-bad-soft);
+    color: var(--color-bad);
+  }
+  .compare th.good, .compare td.good {
+    background: var(--color-good-soft);
+    color: var(--color-good);
+  }
+  .compare th.bad, .compare th.good {
+    text-align: center;
+    font-weight: 700;
+  }
+  .compare td.good, .compare td.bad {
+    color: var(--color-text);
+  }
+
+  .icon {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: 700;
+    margin-right: 6px;
+    font-size: 13px;
+  }
+  .icon.bad { background: var(--color-bad); color: #fff; }
+  .icon.good { background: var(--color-good); color: #fff; }
+
+  .triple {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .triple .card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    background: #fafbfc;
+  }
+  .triple .card .label {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .triple .card h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+  }
+  .triple .card .examples {
+    font-size: 13.5px;
+    color: var(--color-muted);
+  }
+  .triple .card .examples li { margin: 2px 0; }
+
+  blockquote.full-example {
+    border-left: 4px solid var(--color-good);
+    background: var(--color-good-soft);
+    margin: 14px 0 8px;
+    padding: 14px 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 14.5px;
+    color: #064e3b;
+  }
+  blockquote.full-example strong { color: var(--color-good); }
+
+  pre.prompt {
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #1f2937;
+    margin: 8px 0 18px;
+  }
+  pre.prompt::before {
+    content: "📋 コピペ用テンプレ";
+    display: block;
+    font-family: var(--font-jp);
+    font-size: 11px;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .prompt-copy-wrap {
+    margin: 8px 0 18px;
+    position: relative;
+  }
+
+  .prompt-copy-wrap pre.prompt {
+    margin: 0;
+  }
+
+  .copy-template-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 1px solid var(--color-accent);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-family: var(--font-jp);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 7px 10px;
+  }
+
+  .copy-template-btn:hover,
+  .copy-template-btn:focus-visible {
+    background: var(--color-accent-soft);
+  }
+
+  .copy-template-btn.copied {
+    background: var(--color-good);
+    border-color: var(--color-good);
+    color: #fff;
+  }
+
+  .ol-clean {
+    counter-reset: step;
+    list-style: none;
+    padding-left: 0;
+    margin: 12px 0;
+  }
+  .ol-clean li {
+    counter-increment: step;
+    position: relative;
+    padding: 8px 0 8px 36px;
+    margin: 4px 0;
+  }
+  .ol-clean li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 24px;
+    height: 24px;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .followup {
+    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+  .followup h3 { margin-top: 0; }
+
+  .footer-note {
+    margin-top: 36px;
+    padding: 16px 18px;
+    background: var(--color-highlight);
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: #78350f;
+  }
+
+  .checkmark-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 8px 0;
+  }
+  .checkmark-list li {
+    padding: 4px 0 4px 28px;
+    position: relative;
+  }
+  .checkmark-list li::before {
+    content: "▸";
+    color: var(--color-accent);
+    position: absolute;
+    left: 8px;
+    font-weight: 700;
+  }
+
+  /* Print styles — A4 */
+  @media print {
+    body {
+      background: #fff;
+      padding: 0;
+      font-size: 11pt;
+      line-height: 1.6;
+    }
+    .sheet {
+      box-shadow: none;
+      max-width: none;
+      padding: 16mm 18mm;
+      border-radius: 0;
+    }
+    h2 { page-break-after: avoid; }
+    .copy-template-btn { display: none; }
+    pre.prompt, blockquote.full-example, .triple .card, .followup {
+      page-break-inside: avoid;
+    }
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="doc-header">
+    <h1>「AIへの聞き方」型ミニ資料</h1>
+    <div class="meta">第4回 AI活用サポート オフ会 配布資料 ／ 2026-05-05</div>
+  </header>
+
+  <p class="lead">
+    オフ会のグループワーク中、自分の業務について <strong>AIに迷わず質問できる状態</strong> になるための型まとめ。
+    「何を聞けばいいかわからない」を、3つの型に当てはめれば誰でも質問できる、に変えます。
+  </p>
+
+  <h2><span class="num">1</span>なぜ「聞き方」で結果が変わるのか</h2>
+  <p>AIは <strong>質問の精度に応じて答えの質が決まる</strong> 仕組み。同じ業務でも、聞き方次第で出てくる答えはこれだけ違います。</p>
+
+  <table class="compare">
+    <thead>
+      <tr>
+        <th class="bad"><span class="icon bad">✕</span>聞き方</th>
+        <th class="good"><span class="icon good">✓</span>AIの返答</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>「いい感じにまとめて」</td>
+        <td>一般論の箇条書きが返る。自分の業務には使えない</td>
+      </tr>
+      <tr>
+        <td>「私はマルシェで花苗を売っている個人事業主。仕入れ価格と販売価格を月ごとに集計したい。Excelで使える表のテンプレを作って」</td>
+        <td>自分の業務にすぐ使える、列項目つきの具体的な表が返る</td>
+      </tr>
+    </tbody>
+  </table>
+  <p><strong>ポイント:</strong> AIに自分の文脈をどれだけ渡せるかが勝負。</p>
+
+  <h2><span class="num">2</span>基本の型 ―「役割 × 状況 × 欲しい出力」</h2>
+  <p>質問は次の3要素を埋めれば9割うまくいきます。</p>
+
+  <div class="triple">
+    <div class="card">
+      <span class="label">① 役割</span>
+      <h4>私は何をしている人か</h4>
+      <ul class="examples">
+        <li>例: 「私はハンドメイドアクセサリーを作って販売している副業の作家です」</li>
+        <li>例: 「私はYouTubeのSNS運用代行をしているフリーランスです」</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="label">② 状況</span>
+      <h4>今、何に困っているか／何をしたいか</h4>
+      <ul class="examples">
+        <li>例: 「Instagramの投稿文を毎週5本考えるのに2時間かかっています」</li>
+        <li>例: 「クライアントから渡された動画素材から、TikTok用の30秒ショートを切り出したい」</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="label">③ 欲しい出力</span>
+      <h4>どんな形で答えが欲しいか</h4>
+      <ul class="examples">
+        <li>例: 「箇条書きではなく、そのまま投稿に貼れる完成原稿で5本」</li>
+        <li>例: 「動画の何分何秒を切り取るかのタイムスタンプ一覧で」</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>全部つなげるとこう</h3>
+  <blockquote class="full-example">
+    <strong>私はハンドメイドアクセサリーを作って販売している副業の作家です。</strong><br>
+    Instagramの投稿文を毎週5本考えるのに2時間かかっています。<br>
+    箇条書きではなく、そのまま投稿に貼れる完成原稿で5本作ってください。
+  </blockquote>
+
+  <h2><span class="num">3</span>良い例 vs ダメな例（業種別）</h2>
+
+  <h3>ハンドメイド販売</h3>
+  <table class="compare">
+    <thead>
+      <tr><th class="bad"><span class="icon bad">✕</span>ダメな例</th><th class="good"><span class="icon good">✓</span>良い例</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>「商品の説明文書いて」</td>
+        <td>「私は天然石を使ったピアスを作って販売している個人作家です。新作のローズクォーツのピアス（価格3,200円・送料込み・ペア重量4g）について、minne向けの商品説明文を300字以内で書いて。20代後半〜30代の女性をターゲットにしてほしい」</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>マルシェ・小商い</h3>
+  <table class="compare">
+    <thead>
+      <tr><th class="bad"><span class="icon bad">✕</span>ダメな例</th><th class="good"><span class="icon good">✓</span>良い例</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>「売上管理したい」</td>
+        <td>「私はマルシェで花苗と寄植えを月2〜3回販売しています。仕入れ日・仕入れ価格・販売日・販売価格・利益率を1行ずつ記録できるGoogleスプレッドシート用の表を、列名と最初の3行のサンプル付きで作って」</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>SNS運用代行</h3>
+  <table class="compare">
+    <thead>
+      <tr><th class="bad"><span class="icon bad">✕</span>ダメな例</th><th class="good"><span class="icon good">✓</span>良い例</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>「X（Twitter）の投稿考えて」</td>
+        <td>「クライアントは美容室オーナー（30代女性向けカラーが得意）です。X（旧Twitter）で来店促進したいとのこと。140字以内・絵文字あり・ハッシュタグ2個までで、平日昼の投稿案を5パターン作って」</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>アフィリエイト・ブログ</h3>
+  <table class="compare">
+    <thead>
+      <tr><th class="bad"><span class="icon bad">✕</span>ダメな例</th><th class="good"><span class="icon good">✓</span>良い例</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>「記事の構成考えて」</td>
+        <td>「『初心者向け 在宅副業の始め方』というキーワードで、3000字程度のブログ記事の見出し構成（H2を5個、H3を各2〜3個）を作って。読者は会社員30代で、副業未経験の人を想定」</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">4</span>困ったときの「3つの追加質問」</h2>
+  <p>最初の答えに満足できないときは、AIに次のどれかを返すだけで答えが磨かれます。</p>
+  <ol class="ol-clean">
+    <li><strong>「もっと具体的にして」</strong> → 一般論で返ってきたとき</li>
+    <li><strong>「私の業務に当てはめると？」</strong> → 自分の文脈に合わない例が返ってきたとき</li>
+    <li><strong>「他の選択肢も3つ出して」</strong> → 1案しか出なくて比較したいとき</li>
+  </ol>
+
+  <h2><span class="num">5</span>すぐ使えるテンプレート（コピペ用）</h2>
+
+  <h3>業務改善テンプレ</h3>
+<pre class="prompt">私は【役割／業種】です。
+今、【何の業務】に【どれくらいの時間／頻度】かかっていて困っています。
+これをAIで効率化したいです。
+【最終的に欲しい成果物の形】で、3つほど方法を提案してください。</pre>
+
+  <h3>コンテンツ作成テンプレ</h3>
+<pre class="prompt">私は【役割】で、【ターゲット読者／顧客】に向けて【プラットフォーム】で発信しています。
+【テーマ／商品】について、【字数・形式】で【本数】案を作ってください。
+トーンは【カジュアル／丁寧／専門的 など】でお願いします。</pre>
+
+  <h3>業務分析テンプレ</h3>
+<pre class="prompt">私の業務は次の通りです:
+- 【業務A】: 月【N時間】
+- 【業務B】: 月【N時間】
+- 【業務C】: 月【N時間】
+
+このうちAIで効率化できそうなものを優先順位つきで3つ挙げてください。
+理由と、最初の一歩も添えて。</pre>
+
+  <h2><span class="num">6</span>オフ会中に試すミニ宿題</h2>
+  <div class="followup">
+    <p style="margin-top:0">グループワークの30分でこれをやってみる:</p>
+    <ol class="ol-clean">
+      <li>上のテンプレを1つ選ぶ</li>
+      <li>自分の業務で【】を全部埋める</li>
+      <li>AIに送る</li>
+      <li>返ってきた答えをグループで共有する</li>
+    </ol>
+    <p style="margin-bottom:0"><strong>完璧じゃなくていい。</strong> 「とりあえず投げてみる」が今日のゴール。</p>
+  </div>
+
+  <div class="footer-note">
+    💡 質問: わからない・うまくいかない時は、隣の参加者か運営に「これでいいかな？」と見せるだけでOK。一人で悩まないことが今日の最大の効率化。
+  </div>
+
+</div>
+<script>
+  document.querySelectorAll('pre.prompt').forEach((prompt) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'prompt-copy-wrap';
+    prompt.parentNode.insertBefore(wrap, prompt);
+    wrap.appendChild(prompt);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-template-btn';
+    button.textContent = 'コピー';
+    button.setAttribute('aria-label', 'テンプレをコピー');
+    wrap.appendChild(button);
+
+    button.addEventListener('click', async () => {
+      const text = prompt.textContent.trim();
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          textarea.remove();
+        }
+
+        button.textContent = 'コピー済み';
+        button.classList.add('copied');
+        window.setTimeout(() => {
+          button.textContent = 'コピー';
+          button.classList.remove('copied');
+        }, 1600);
+      } catch (error) {
+        button.textContent = '失敗';
+        window.setTimeout(() => {
+          button.textContent = 'コピー';
+        }, 1600);
+      }
+    });
+  });
+</script>
+</body>
+</html>

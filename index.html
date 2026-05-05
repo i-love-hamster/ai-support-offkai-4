@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4回 AI活用サポート オフ会 教材一覧</title>
+<style>
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #1f2937;
+    --color-muted: #6b7280;
+    --color-border: #e5e7eb;
+    --color-accent: #2563eb;
+    --color-accent-soft: #eff6ff;
+    --color-good: #15803d;
+    --color-good-soft: #ecfdf5;
+    --color-bad: #b91c1c;
+    --color-bad-soft: #fef2f2;
+    --color-code-bg: #f8fafc;
+    --color-highlight: #fef3c7;
+    --max-width: 780px;
+    --radius: 8px;
+    --font-jp: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+    --font-mono: 'SF Mono', 'Consolas', 'Menlo', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-jp);
+    color: var(--color-text);
+    background: #f3f4f6;
+    margin: 0;
+    padding: 32px 16px;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+    padding: 48px 56px;
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+  }
+
+  header.doc-header {
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+  }
+
+  header.doc-header h1 {
+    font-size: 26px;
+    margin: 0 0 8px;
+    letter-spacing: 0.02em;
+    color: #111827;
+  }
+
+  header.doc-header .meta {
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  p { margin: 8px 0; }
+
+  .lead {
+    background: var(--color-accent-soft);
+    border-left: 4px solid var(--color-accent);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 0 0 28px;
+    font-size: 14.5px;
+  }
+
+  .lead strong { color: var(--color-accent); }
+
+  .material-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin: 18px 0 0;
+  }
+
+  .material-card {
+    display: block;
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: #fafbfc;
+    color: var(--color-text);
+    padding: 16px 18px;
+    text-decoration: none;
+  }
+
+  .material-card:hover,
+  .material-card:focus-visible {
+    background: var(--color-accent-soft);
+    border-color: #bfdbfe;
+    outline: 0;
+  }
+
+  .material-card .label {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .material-card h2 {
+    font-size: 18px;
+    line-height: 1.45;
+    margin: 0 0 6px;
+    color: #111827;
+  }
+
+  .material-card p {
+    color: var(--color-muted);
+    font-size: 13.5px;
+    margin: 0;
+  }
+
+  .footer-note {
+    margin-top: 36px;
+    padding: 16px 18px;
+    background: var(--color-highlight);
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: #78350f;
+  }
+
+  @media (max-width: 720px) {
+    body { padding: 16px 10px; }
+    .sheet { padding: 28px 20px; }
+    header.doc-header h1 { font-size: 23px; }
+  }
+
+  @media print {
+    body {
+      background: #fff;
+      padding: 0;
+      font-size: 11pt;
+      line-height: 1.6;
+    }
+    .sheet {
+      box-shadow: none;
+      max-width: none;
+      padding: 16mm 18mm;
+      border-radius: 0;
+    }
+    .material-card {
+      page-break-inside: avoid;
+      color: var(--color-text);
+    }
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="doc-header">
+    <h1>第4回 AI活用サポート オフ会 教材一覧</h1>
+    <div class="meta">配布資料リンク集 ／ 2026-05-05</div>
+  </header>
+
+  <p class="lead">
+    第4回オフ会で使う教材への入口です。必要な資料を選んで開いてください。
+  </p>
+
+  <div class="material-list">
+    <a class="material-card" href="handout-question-template.html">
+      <span class="label">資料 1</span>
+      <h2>「AIへの聞き方」型ミニ資料</h2>
+      <p>AIに質問するときの基本形、悪い例と良い例、コピペ用テンプレをまとめた資料。</p>
+    </a>
+
+    <a class="material-card" href="handout-usecase-by-industry.html">
+      <span class="label">資料 2</span>
+      <h2>業種別 AI活用ユースケース集</h2>
+      <p>参加者の業種に近い例を探し、実務で使えるAI活用の入り口を見つける資料。</p>
+    </a>
+
+    <a class="material-card" href="handout-groupwork.html">
+      <span class="label">資料 3</span>
+      <h2>グループワーク 題材シート</h2>
+      <p>ツール作成体験と業務自動化体験の進め方、プロンプト、持ち帰りアクションの資料。</p>
+    </a>
+  </div>
+
+  <div class="footer-note">
+    迷ったら、まず「AIへの聞き方」型ミニ資料から開くと流れを掴みやすくなります。
+  </div>
+</div>
+</body>
+</html>

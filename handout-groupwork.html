@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>グループワーク 題材シート — 第4回 AI活用サポート オフ会</title>
+<style>
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #1f2937;
+    --color-muted: #6b7280;
+    --color-border: #e5e7eb;
+    --color-accent: #2563eb;
+    --color-accent-soft: #eff6ff;
+    --color-good: #15803d;
+    --color-good-soft: #ecfdf5;
+    --color-bad: #b91c1c;
+    --color-bad-soft: #fef2f2;
+    --color-code-bg: #f8fafc;
+    --color-highlight: #fef3c7;
+    --max-width: 780px;
+    --radius: 8px;
+    --font-jp: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+    --font-mono: 'SF Mono', 'Consolas', 'Menlo', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-jp);
+    color: var(--color-text);
+    background: #f3f4f6;
+    margin: 0;
+    padding: 32px 16px;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+    padding: 48px 56px;
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+  }
+
+  header.doc-header {
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+  }
+
+  header.doc-header h1 {
+    font-size: 26px;
+    margin: 0 0 8px;
+    letter-spacing: 0.02em;
+    color: #111827;
+  }
+
+  header.doc-header .meta {
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  h2 {
+    font-size: 19px;
+    margin: 36px 0 14px;
+    padding: 6px 0 6px 12px;
+    border-left: 4px solid var(--color-accent);
+    color: #111827;
+  }
+
+  h2 .num {
+    color: var(--color-accent);
+    margin-right: 8px;
+    font-weight: 700;
+  }
+
+  h2 .code {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 13px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-right: 10px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
+
+  h3 {
+    font-size: 16px;
+    margin: 22px 0 8px;
+    color: #1f2937;
+  }
+
+  h4 {
+    font-size: 15px;
+    margin: 16px 0 8px;
+    color: #1f2937;
+  }
+
+  p { margin: 8px 0; }
+  ul, ol { margin: 8px 0 12px; padding-left: 22px; }
+  li { margin: 3px 0; }
+
+  .lead {
+    background: var(--color-accent-soft);
+    border-left: 4px solid var(--color-accent);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 0 0 28px;
+    font-size: 14.5px;
+  }
+
+  .lead strong { color: var(--color-accent); }
+
+  .toc {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 0 0 30px;
+  }
+
+  .toc a {
+    display: block;
+    border: 1px solid var(--color-accent);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--color-accent);
+    font-weight: 700;
+    line-height: 1.4;
+    padding: 12px 14px;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .toc a:hover,
+  .toc a:focus-visible {
+    background: var(--color-accent-soft);
+  }
+
+  .sheet-title {
+    border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    background: #f9fafb;
+    padding: 14px 18px;
+    margin: 34px 0 18px;
+    page-break-after: avoid;
+  }
+
+  .sheet-title h2 {
+    border-left: 0;
+    margin: 0 0 8px;
+    padding: 0;
+  }
+
+  .sheet-title p {
+    color: var(--color-muted);
+    font-size: 13.5px;
+    margin: 4px 0;
+  }
+
+  .summary-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 10px 0 0;
+  }
+
+  .summary-list li {
+    border-top: 1px solid var(--color-border);
+    padding: 8px 0;
+  }
+
+  .summary-list li:first-child { border-top: 0; }
+  .summary-list strong { color: #111827; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px;
+    font-size: 14px;
+  }
+
+  th, td {
+    border: 1px solid var(--color-border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: #f9fafb;
+    font-weight: 600;
+  }
+
+  .timeline th:first-child,
+  .timeline td:first-child {
+    width: 92px;
+    white-space: nowrap;
+  }
+
+  .choice-table th:first-child,
+  .choice-table td:first-child {
+    width: 32%;
+  }
+
+  .followup {
+    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+
+  .followup h3 { margin-top: 0; }
+
+  .triple {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+
+  .triple .card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    background: #fafbfc;
+  }
+
+  .triple .card .label {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .triple .card h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+  }
+
+  .triple .card .examples {
+    font-size: 13.5px;
+    color: var(--color-muted);
+  }
+
+  pre.prompt {
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #1f2937;
+    margin: 8px 0 18px;
+  }
+
+  pre.prompt::before {
+    content: "📋 コピペ用テンプレ";
+    display: block;
+    font-family: var(--font-jp);
+    font-size: 11px;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  pre.prompt.sample::before { content: "📋 コピペ用サンプル"; }
+  pre.prompt.extra::before { content: "📋 追加お願い"; }
+
+  .prompt-copy-wrap {
+    margin: 8px 0 18px;
+    position: relative;
+  }
+
+  .prompt-copy-wrap pre.prompt {
+    margin: 0;
+    padding-right: 94px;
+  }
+
+  .copy-template-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 1px solid var(--color-accent);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-family: var(--font-jp);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 7px 10px;
+  }
+
+  .copy-template-btn:hover,
+  .copy-template-btn:focus-visible {
+    background: var(--color-accent-soft);
+  }
+
+  .copy-template-btn.copied {
+    background: var(--color-good);
+    border-color: var(--color-good);
+    color: #fff;
+  }
+
+  .ol-clean {
+    counter-reset: step;
+    list-style: none;
+    padding-left: 0;
+    margin: 12px 0;
+  }
+
+  .ol-clean li {
+    counter-increment: step;
+    position: relative;
+    padding: 8px 0 8px 36px;
+    margin: 4px 0;
+  }
+
+  .ol-clean li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 24px;
+    height: 24px;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .checklist {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .checklist li {
+    position: relative;
+    padding-left: 28px;
+    margin: 8px 0;
+  }
+
+  .checklist li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    background: #fff;
+  }
+
+  .tip {
+    border-left: 4px solid var(--color-good);
+    background: var(--color-good-soft);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: #064e3b;
+    font-size: 14.5px;
+    margin: 14px 0 18px;
+    padding: 14px 18px;
+  }
+
+  .tip strong { color: var(--color-good); }
+
+  .footer-note {
+    margin-top: 36px;
+    padding: 16px 18px;
+    background: var(--color-highlight);
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: #78350f;
+  }
+
+  .page-break {
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    margin: 34px 0;
+  }
+
+  @media (max-width: 720px) {
+    body { padding: 16px 10px; }
+    .sheet { padding: 28px 20px; }
+    header.doc-header h1 { font-size: 23px; }
+    table { font-size: 13px; }
+    th, td { padding: 8px 9px; }
+    .prompt-copy-wrap pre.prompt { padding-right: 18px; }
+    .toc { grid-template-columns: 1fr; }
+    .copy-template-btn {
+      position: static;
+      margin: 8px 0 0;
+      width: 100%;
+    }
+  }
+
+  @media print {
+    body {
+      background: #fff;
+      padding: 0;
+      font-size: 11pt;
+      line-height: 1.6;
+    }
+    .sheet {
+      box-shadow: none;
+      max-width: none;
+      padding: 16mm 18mm;
+      border-radius: 0;
+    }
+    h2, h3, .sheet-title { page-break-after: avoid; }
+    pre.prompt, .triple .card, .followup, .tip, table {
+      page-break-inside: avoid;
+    }
+    .copy-template-btn { display: none; }
+    .toc { display: none; }
+    .prompt-copy-wrap pre.prompt { padding-right: 18px; }
+    .page-break {
+      page-break-before: always;
+      border: 0;
+      margin: 0;
+    }
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="doc-header">
+    <h1>グループワーク 題材シート</h1>
+    <div class="meta">第4回 AI活用サポート オフ会 配布資料 ／ 2026-05-05</div>
+  </header>
+
+  <nav class="toc" aria-label="目次">
+    <a href="#sheet-a-title">シートAへ</a>
+    <a href="#sheet-b-title">シートBへ</a>
+  </nav>
+
+  <section class="sheet-title" aria-labelledby="sheet-a-title">
+    <h2 id="sheet-a-title"><span class="code">A</span>ツール作成体験（30分）</h2>
+    <ul class="summary-list">
+      <li><strong>対象:</strong> いづみ、よっちゃん、ふみの、なお🍊</li>
+      <li><strong>ゴール:</strong> Claude Code に指示を出しながら、自分の副業・仕事で使えるシンプルな Web ページを作る。「コードを一切書かずにアプリができる」体験を30分で掴む。</li>
+      <li><strong>作るもの:</strong> HTML 1ファイルのWebページ（ブラウザで開いて使えるもの）</li>
+    </ul>
+  </section>
+
+  <h2><span class="num">1</span>タイムライン</h2>
+  <table class="timeline">
+    <thead>
+      <tr>
+        <th>経過</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0〜5分</td>
+        <td>何を作るか決める（下の選択肢から1つ）</td>
+      </tr>
+      <tr>
+        <td>5〜10分</td>
+        <td>Claude Code にプロジェクトを作らせる</td>
+      </tr>
+      <tr>
+        <td>10〜25分</td>
+        <td>対話しながらページを育てる</td>
+      </tr>
+      <tr>
+        <td>25〜30分</td>
+        <td>グループで見せ合う・感想を言い合う</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">2</span>何を作るか決める（5分）</h2>
+  <p>3つの中から1つ選んでください。どれも「HTMLファイルをブラウザで開くだけ」で動きます。</p>
+  <table class="choice-table">
+    <thead>
+      <tr>
+        <th>選択肢</th>
+        <th>内容</th>
+        <th>向いている人</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>A. ショップ紹介ページ</strong></td>
+        <td>商品一覧・価格・問い合わせリンクが入ったシンプルなページ</td>
+        <td>ハンドメイド・マルシェ出店者</td>
+      </tr>
+      <tr>
+        <td><strong>B. 自己紹介 / ポートフォリオページ</strong></td>
+        <td>名前・できること・実績・連絡先が入ったウェブ名刺</td>
+        <td>副業フリーランス・コンサル</td>
+      </tr>
+      <tr>
+        <td><strong>C. イベント告知ページ</strong></td>
+        <td>タイトル・日時・場所・参加方法が入った告知ページ</td>
+        <td>マルシェ・教室・SNS告知用</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tip"><strong>決まらない人へ:</strong> よっちゃんは A、ふみのは B、いづみは B or C から始めるとスムーズです。</div>
+
+  <h2><span class="num">3</span>Claude Code にプロジェクトを作らせる（5分）</h2>
+  <h3>やること</h3>
+  <ol class="ol-clean">
+    <li>Claude Code のデスクトップアプリを開く</li>
+    <li>新しいプロジェクトフォルダを作る（デスクトップに <code>offkai-demo</code> フォルダを作っておく）</li>
+    <li>下のプロンプトから、Step 1で選んだものを貼り付けて送る</li>
+  </ol>
+
+  <h3>最初のプロンプト（コピペ用）</h3>
+  <p>Step 1で選んだものを1つ選び、<code>○○</code> の部分を自分の情報に書き換えてから送ってください。書き換えが難しければ仮の情報でOKです。</p>
+
+  <h4>A. ショップ紹介ページを作る場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt">デスクトップの「offkai-demo」フォルダに移動して、
+シンプルなショップ紹介ページを作ってください。
+
+【私の情報】
+- 名前: ○○ショップ（自分のショップ名に変えてください）
+- 何を売っているか: ○○（例: ドライフラワーのリース）
+- 価格帯: ○○円〜○○円
+- 連絡先: （InstagramのURLなど）
+
+要件:
+- ファイルは index.html 1つだけ
+- シンプルでかわいいデザイン（パステルカラー）
+- スマートフォンでも見やすいレイアウト
+- ブラウザでファイルをダブルクリックしたら開けるもの</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h4>B. 自己紹介 / ポートフォリオページを作る場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt">デスクトップの「offkai-demo」フォルダに移動して、
+シンプルな自己紹介 / ポートフォリオページを作ってください。
+
+【私の情報】
+- 名前: ○○（自分の名前や活動名に変えてください）
+- やっていること: ○○（例: SNS運用サポート、資料作成、ハンドメイド販売）
+- できること: ○○（例: 相談対応、デザイン、文章作成）
+- 実績や経験: ○○（なければ「これから始めたいこと」でもOK）
+- 連絡先: （メール、InstagramのURLなど）
+
+要件:
+- ファイルは index.html 1つだけ
+- はじめて見る人にも何をしている人かわかる構成
+- やさしく信頼感のあるデザイン
+- スマートフォンでも見やすいレイアウト
+- ブラウザでファイルをダブルクリックしたら開けるもの</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h4>C. イベント告知ページを作る場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt">デスクトップの「offkai-demo」フォルダに移動して、
+シンプルなイベント告知ページを作ってください。
+
+【イベント情報】
+- イベント名: ○○（例: 春のミニマルシェ）
+- 日時: ○○年○月○日 ○:○○〜○:○○
+- 場所: ○○（例: ○○カフェ、オンライン、地域センター）
+- 内容: ○○（例: ハンドメイド作品の販売、体験レッスン）
+- 参加方法: ○○（例: 予約不要、InstagramのDMで予約）
+- 連絡先: （InstagramのURLなど）
+
+要件:
+- ファイルは index.html 1つだけ
+- 日時・場所・参加方法がすぐわかる構成
+- 楽しそうで見やすいデザイン
+- スマートフォンでも見やすいレイアウト
+- ブラウザでファイルをダブルクリックしたら開けるもの</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h2><span class="num">4</span>対話しながらページを育てる（15分）</h2>
+  <p>Claude Code が <code>index.html</code> を作ったら、ブラウザで開いて確認します。次の「追加お願いリスト」から気になるものを試してみましょう。</p>
+
+  <h3>追加お願いリスト（コピペ用）</h3>
+
+  <h4>カード形式の項目を追加したい場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt extra">このページの内容に合うカードを3つ追加してください。
+ショップ紹介ページなら「商品カード」、
+自己紹介ページなら「できること・実績・相談メニュー」、
+イベント告知ページなら「見どころ・当日の流れ・参加方法」にしてください。
+それぞれに短い見出しと一言説明を入れてください。</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h4>色やデザインを変えたい場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt extra">全体のカラーテーマを「ミントグリーン系」に変えてください。
+フォントも丸みのある感じにしてください。</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h4>SNSリンクを追加したい場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt extra">ページの下部に「Instagramを見る」ボタンを追加してください。
+ボタンをクリックしたら https://instagram.com/（自分のURL）に飛ぶようにしてください。</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h4>気に入らない部分を直したい場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt extra">ヘッダー部分のレイアウトが気になります。
+タイトルをもっと大きく、背景色を白から薄いピンクに変えてください。</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <div class="tip"><strong>コツ:</strong> 「なんか違う」と感じたら「もっと○○にしてほしい」と伝えるだけでOK。完璧でなくていいです。</div>
+
+  <h2><span class="num">5</span>グループで見せ合う・感想を言い合う（5分）</h2>
+  <ul>
+    <li>各自のページをメンターに見せてフィードバックをもらう</li>
+    <li>「ここが思い通りになった」「ここが難しかった」を1人1分でシェア</li>
+  </ul>
+
+  <h2><span class="num">6</span>持ち帰り：次の一歩（1つ選ぶ）</h2>
+  <div class="followup">
+    <ul class="checklist">
+      <li>今日作ったページに自分の本物の情報を入れて完成させる</li>
+      <li>今日作ったページを友人に見せてフィードバックをもらう</li>
+      <li>次回のオフ会までに「自分が本当に欲しいツール」を1つ決めてClaude Codeに作ってもらう</li>
+    </ul>
+  </div>
+
+  <h2><span class="num">7</span>行き詰まったときのチートシート</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>困ったこと</th>
+        <th>聞き方</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>思い通りのデザインにならない</td>
+        <td>「○○のような雰囲気にしてほしい。具体的には…」と言葉で説明する</td>
+      </tr>
+      <tr>
+        <td>エラーが出て動かない</td>
+        <td>「エラーが出ています。修正してください」とエラーメッセージをそのまま貼る</td>
+      </tr>
+      <tr>
+        <td>何を頼めばいいかわからない</td>
+        <td>「どんなページを作るとよさそうか、質問しながら一緒に整理してください」と Claude に聞く</td>
+      </tr>
+      <tr>
+        <td>ファイルが見つからない</td>
+        <td>「作ったファイルはどこにあるか教えてください」と Claude に聞く</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="page-break">
+
+  <section class="sheet-title" aria-labelledby="sheet-b-title">
+    <h2 id="sheet-b-title"><span class="code">B</span>業務自動化体験（30分）</h2>
+    <ul class="summary-list">
+      <li><strong>対象:</strong> まなんちゃん（＋ふみの）</li>
+      <li><strong>ゴール:</strong> 「質問の型（役割 × 状況 × 欲しい出力）」を手を動かして体で覚える。AIに投げて返ってきた答えをそのまま使えるレベルの質問文が自分で作れるようになる。</li>
+      <li><strong>題材:</strong> まなんちゃんのマルシェ仕入れ・販売管理</li>
+    </ul>
+  </section>
+
+  <h2><span class="num">1</span>タイムライン</h2>
+  <table class="timeline">
+    <thead>
+      <tr>
+        <th>経過</th>
+        <th>内容</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0〜5分</td>
+        <td>「質問の型」を3要素でおさらい</td>
+      </tr>
+      <tr>
+        <td>5〜10分</td>
+        <td>まなんちゃん版プロンプトをそのまま試す（実演）</td>
+      </tr>
+      <tr>
+        <td>10〜20分</td>
+        <td>自分の業務に当てはめて「自分版」を作る</td>
+      </tr>
+      <tr>
+        <td>20〜28分</td>
+        <td>AIの答えをもとに深掘りする（追加質問を練習）</td>
+      </tr>
+      <tr>
+        <td>28〜30分</td>
+        <td>グループで見せ合う</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">2</span>「質問の型」を3要素でおさらい（5分）</h2>
+  <p>AIへの質問は <strong>3つの要素</strong> を埋めれば9割うまくいきます。</p>
+  <div class="triple">
+    <div class="card">
+      <span class="label">① 役割</span>
+      <h4>私は何をしている人か</h4>
+      <div class="examples">例: 私は○○をしています。</div>
+    </div>
+    <div class="card">
+      <span class="label">② 状況</span>
+      <h4>今、何に困っているか</h4>
+      <div class="examples">例: 今、○○に困っています（○○がしたいです）。</div>
+    </div>
+    <div class="card">
+      <span class="label">③ 欲しい出力</span>
+      <h4>どんな形式で返してほしいか</h4>
+      <div class="examples">例: ○○という形式で出してください。</div>
+    </div>
+  </div>
+  <div class="tip"><strong>大切なこと:</strong> AIは自分の文脈を知らない。「あなたは何者で、何に困っているか」を毎回伝えるのがコツ。</div>
+
+  <h2><span class="num">3</span>まなんちゃん版プロンプトを試す（実演）（5分）</h2>
+  <p>次のプロンプトをそのまま Claude（または Claude Code）に送ります。</p>
+
+  <div class="prompt-copy-wrap">
+    <pre class="prompt sample">私はお花の寄植えと花苗をマルシェで販売している個人事業主です。
+月に2〜3回、地元のマルシェに出店しています。
+
+今、仕入れたお花の種類・価格と、当日の販売状況をExcelやGoogleスプレッドシートで管理したいのですが、
+どう記録すればいいかわからず困っています。
+
+Googleスプレッドシートにそのまま貼れる管理表を作ってください。
+列項目は「仕入れ日・商品名・仕入れ価格・個数・販売予定価格・実際の販売数・売上金額・利益・残数・備考」
+としてください。
+最初の3行に花苗のサンプルデータを入れてください。
+
+あわせて、Googleスプレッドシートで使える計算式も入れてください。
+- 売上金額 = 販売予定価格 × 実際の販売数
+- 利益 = 売上金額 - 仕入れ価格 × 実際の販売数
+- 残数 = 個数 - 実際の販売数
+
+出力は、次の2つに分けてください。
+1. Googleスプレッドシートに貼り付ける表
+2. 計算式の意味を初心者向けに説明したメモ</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h3>確認ポイント</h3>
+  <ul>
+    <li>列名が自分の業務に合っているか</li>
+    <li>サンプルデータを見て「使えそう」と思えるか</li>
+    <li>不要な列・欲しい列はないか</li>
+  </ul>
+
+  <h2><span class="num">4</span>自分の業務に当てはめて「自分版」を作る（10分）</h2>
+  <p>まなんちゃんのプロンプトを見本に、自分の業務で使える管理表やツールを考えて作ります。</p>
+
+  <h3>自分版プロンプトの作り方</h3>
+  <p>下のテンプレートの【】を自分の言葉で埋めてください。</p>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt">私は【自分の業種・やっていること】をしています。
+今、【何の業務・作業】に困っています（月に約【時間/頻度】かかっています）。
+
+【欲しいもの: 表・リスト・文章テンプレなど】を作ってください。
+項目は「【列名や項目名を列挙】」としてください。
+【最初のサンプルデータや具体例】も入れてください。</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h3>業種別ヒント</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>業種</th>
+        <th>何を作ると便利か</th>
+        <th>欲しい出力の例</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ハンドメイド販売</td>
+        <td>材料費・制作時間の原価計算表</td>
+        <td>「材料名・単価・使用量・材料費・制作時間・販売価格・利益率」の表</td>
+      </tr>
+      <tr>
+        <td>アフィリエイト / ブログ</td>
+        <td>記事進捗管理シート</td>
+        <td>「キーワード・タイトル案・文字数目標・進捗・公開日」の表</td>
+      </tr>
+      <tr>
+        <td>SNS運用代行</td>
+        <td>月次報告書テンプレ</td>
+        <td>「投稿数・いいね合計・フォロワー増減・今月のハイライト・来月の施策」の雛形</td>
+      </tr>
+      <tr>
+        <td>副業未定 / 何でもやる系</td>
+        <td>自分の業務時間の棚卸し</td>
+        <td>「業務名・月の作業時間・AIで置き換えられるか・優先度」の表</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tip"><strong>書けない人へ:</strong> 「私は【副業の内容】をしています。AIで何を自動化するのがおすすめか3つ教えてください」と聞いてOKです。</div>
+
+  <h2><span class="num">5</span>AIの答えをもとに深掘りする（追加質問の練習）（8分）</h2>
+  <p>最初の答えが返ってきたら、次の3つの「深掘り質問」から1つを選んで試します。</p>
+
+  <h4>「もっと自分の業務に合わせてほしい」場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt extra">私の場合は○○という特徴があります。
+それに合わせて表の項目を修正してください。
+特に「○○」という列を追加してほしいです。</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h4>「別の使い方も試したい」場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt extra">この管理表を使って、月ごとの売上合計と利益率を
+自動計算する数式もGoogleスプレッドシート向けに教えてください。</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <h4>「もっと簡単にしたい」場合</h4>
+  <div class="prompt-copy-wrap">
+    <pre class="prompt extra">少し複雑すぎます。
+初めて使う人でも迷わない、最低限の列だけに絞ったシンプル版を作ってください。</pre>
+    <button class="copy-template-btn" type="button">コピー</button>
+  </div>
+
+  <div class="tip"><strong>ポイント:</strong> 最初から完璧を求めなくていいです。「なんか違う」を言葉にして返すことが練習です。</div>
+
+  <h2><span class="num">6</span>グループで見せ合う（2分）</h2>
+  <ul>
+    <li>自分が作ったプロンプトとAIの返答をもう1人と見せ合う</li>
+    <li>「これ使えそう」「ここが難しかった」を一言ずつ</li>
+  </ul>
+
+  <h2><span class="num">7</span>持ち帰り：次の一歩（1つ選ぶ）</h2>
+  <div class="followup">
+    <ul class="checklist">
+      <li>今日作った管理表を実際の業務データで埋めてみる</li>
+      <li>今日作ったプロンプトを保存して、来週の実務で使ってみる</li>
+      <li>「もっとこうしたい」という改善案を次回のオフ会で共有する</li>
+    </ul>
+  </div>
+
+  <h2><span class="num">8</span>行き詰まったときのチートシート</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>困ったこと</th>
+        <th>やること</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>質問の型が思い浮かばない</td>
+        <td>「私は○○しています。AIで効率化できそうな業務を3つ挙げてください」と聞く</td>
+      </tr>
+      <tr>
+        <td>返ってきた答えが使えない</td>
+        <td>「もっと私の業務に具体的に合わせてください」と返す</td>
+      </tr>
+      <tr>
+        <td>何を作ればいいかわからない</td>
+        <td>「私の業務で毎回時間がかかることは何ですか？ヒントをください」と書く</td>
+      </tr>
+      <tr>
+        <td>うまくいかなくて止まっている</td>
+        <td>「ここまで試しました。次に何を直せばいいですか」と Claude に聞く</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2><span class="num">9</span>グループワーク終了後に全員で確認すること</h2>
+  <ul>
+    <li>今日試したプロンプトをスマートフォンのメモに保存する</li>
+    <li>次回のオフ会までに「1回だけ自分の業務でAIを使う」を宿題にする</li>
+    <li>困ったことは LINEグループで気軽に相談OK</li>
+  </ul>
+
+  <div class="footer-note">
+    💡 迷ったら、完成度より「AIにもう一度お願いしてみる」を優先。言い直すこと自体が今日の練習です。
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.prompt-copy-wrap').forEach((wrap) => {
+    const button = wrap.querySelector('.copy-template-btn');
+    const prompt = wrap.querySelector('pre.prompt');
+    if (!button || !prompt) return;
+
+    button.addEventListener('click', async () => {
+      const text = prompt.innerText.replace(/^📋 .*\n/, '').trim();
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = 'コピー済み';
+        button.classList.add('copied');
+        window.setTimeout(() => {
+          button.textContent = 'コピー';
+          button.classList.remove('copied');
+        }, 1600);
+      } catch (error) {
+        const range = document.createRange();
+        range.selectNodeContents(prompt);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        button.textContent = '選択しました';
+      }
+    });
+  });
+</script>
+</body>
+</html>
