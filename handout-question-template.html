@@ -46,6 +46,19 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
   }
 
+  .back-to-index {
+    display: inline-block;
+    color: var(--color-accent);
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 18px;
+    text-decoration: none;
+  }
+  .back-to-index:hover,
+  .back-to-index:focus-visible {
+    text-decoration: underline;
+  }
+
   header.doc-header {
     border-bottom: 2px solid var(--color-accent);
     padding-bottom: 16px;
@@ -200,7 +213,7 @@
     margin: 8px 0 18px;
   }
   pre.prompt::before {
-    content: "📋 コピペ用テンプレ";
+    content: "📋 コピーして使うひな形";
     display: block;
     font-family: var(--font-jp);
     font-size: 11px;
@@ -337,6 +350,7 @@
 </head>
 <body>
 <div class="sheet">
+  <a class="back-to-index" href="index.html">← 教材一覧へ戻る</a>
 
   <header class="doc-header">
     <h1>「AIへの聞き方」型ミニ資料</h1>
@@ -349,27 +363,23 @@
   </p>
 
   <h2><span class="num">1</span>なぜ「聞き方」で結果が変わるのか</h2>
-  <p>AIは <strong>質問の精度に応じて答えの質が決まる</strong> 仕組み。同じ業務でも、聞き方次第で出てくる答えはこれだけ違います。</p>
+  <p>AIは <strong>質問の具体さに応じて答えの質が変わる</strong> 仕組み。同じ業務でも、聞き方次第で出てくる答えはこれだけ違います。</p>
 
   <table class="compare">
     <thead>
       <tr>
-        <th class="bad"><span class="icon bad">✕</span>聞き方</th>
-        <th class="good"><span class="icon good">✓</span>AIの返答</th>
+        <th class="bad"><span class="icon bad">✕</span>あいまいな聞き方</th>
+        <th class="good"><span class="icon good">✓</span>具体的な聞き方</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>「いい感じにまとめて」</td>
-        <td>一般論の箇条書きが返る。自分の業務には使えない</td>
-      </tr>
-      <tr>
-        <td>「私はマルシェで花苗を売っている個人事業主。仕入れ価格と販売価格を月ごとに集計したい。Excelで使える表のテンプレを作って」</td>
-        <td>自分の業務にすぐ使える、列項目つきの具体的な表が返る</td>
+        <td>「私はマルシェで花苗を売っている個人事業主。仕入れ価格と販売価格を月ごとに集計したい。Excelで使える表のひな形を作って」</td>
       </tr>
     </tbody>
   </table>
-  <p><strong>ポイント:</strong> AIに自分の文脈をどれだけ渡せるかが勝負。</p>
+  <p><strong>ポイント:</strong> あいまいに聞くと一般論が返りやすく、具体的に聞くと自分の業務に使える答えが返りやすくなります。AIに自分の背景情報をどれだけ渡せるかが勝負。</p>
 
   <h2><span class="num">2</span>基本の型 ―「役割 × 状況 × 欲しい出力」</h2>
   <p>質問は次の3要素を埋めれば9割うまくいきます。</p>
@@ -380,7 +390,7 @@
       <h4>私は何をしている人か</h4>
       <ul class="examples">
         <li>例: 「私はハンドメイドアクセサリーを作って販売している副業の作家です」</li>
-        <li>例: 「私はYouTubeのSNS運用代行をしているフリーランスです」</li>
+        <li>例: 「私はYouTubeやInstagramの投稿を手伝う副業をしています」</li>
       </ul>
     </div>
     <div class="card">
@@ -388,7 +398,7 @@
       <h4>今、何に困っているか／何をしたいか</h4>
       <ul class="examples">
         <li>例: 「Instagramの投稿文を毎週5本考えるのに2時間かかっています」</li>
-        <li>例: 「クライアントから渡された動画素材から、TikTok用の30秒ショートを切り出したい」</li>
+        <li>例: 「依頼主から渡された動画から、TikTok用の30秒動画を作りたい」</li>
       </ul>
     </div>
     <div class="card">
@@ -396,7 +406,7 @@
       <h4>どんな形で答えが欲しいか</h4>
       <ul class="examples">
         <li>例: 「箇条書きではなく、そのまま投稿に貼れる完成原稿で5本」</li>
-        <li>例: 「動画の何分何秒を切り取るかのタイムスタンプ一覧で」</li>
+        <li>例: 「動画の何分何秒を使うかの一覧で」</li>
       </ul>
     </div>
   </div>
@@ -418,7 +428,7 @@
     <tbody>
       <tr>
         <td>「商品の説明文書いて」</td>
-        <td>「私は天然石を使ったピアスを作って販売している個人作家です。新作のローズクォーツのピアス（価格3,200円・送料込み・ペア重量4g）について、minne向けの商品説明文を300字以内で書いて。20代後半〜30代の女性をターゲットにしてほしい」</td>
+        <td>「私は天然石を使ったピアスを作って販売している個人作家です。新作のローズクォーツのピアス（価格3,200円・送料込み・ペア重量4g）について、minne向けの商品説明文を300字以内で書いて。届けたい相手は20代後半〜30代の女性です」</td>
       </tr>
     </tbody>
   </table>
@@ -431,20 +441,20 @@
     <tbody>
       <tr>
         <td>「売上管理したい」</td>
-        <td>「私はマルシェで花苗と寄植えを月2〜3回販売しています。仕入れ日・仕入れ価格・販売日・販売価格・利益率を1行ずつ記録できるGoogleスプレッドシート用の表を、列名と最初の3行のサンプル付きで作って」</td>
+        <td>「私はマルシェで花苗と寄植えを月2〜3回販売しています。仕入れ日・仕入れ価格・販売日・販売価格・利益率を1行ずつ記録できる表を、列名と最初の3行のサンプル付きで作って」</td>
       </tr>
     </tbody>
   </table>
 
-  <h3>SNS運用代行</h3>
+  <h3>投稿作成の手伝い</h3>
   <table class="compare">
     <thead>
       <tr><th class="bad"><span class="icon bad">✕</span>ダメな例</th><th class="good"><span class="icon good">✓</span>良い例</th></tr>
     </thead>
     <tbody>
       <tr>
-        <td>「X（Twitter）の投稿考えて」</td>
-        <td>「クライアントは美容室オーナー（30代女性向けカラーが得意）です。X（旧Twitter）で来店促進したいとのこと。140字以内・絵文字あり・ハッシュタグ2個までで、平日昼の投稿案を5パターン作って」</td>
+        <td>「Instagramの投稿考えて」</td>
+        <td>「依頼主は美容室オーナーで、30代女性向けのカラーが得意です。Instagramで来店につなげたいとのこと。短めの文章・絵文字あり・ハッシュタグ2個までで、平日昼の投稿案を5パターン作って」</td>
       </tr>
     </tbody>
   </table>
@@ -457,7 +467,7 @@
     <tbody>
       <tr>
         <td>「記事の構成考えて」</td>
-        <td>「『初心者向け 在宅副業の始め方』というキーワードで、3000字程度のブログ記事の見出し構成（H2を5個、H3を各2〜3個）を作って。読者は会社員30代で、副業未経験の人を想定」</td>
+        <td>「『初心者向け 在宅副業の始め方』という検索されそうな言葉で、3000字程度のブログ記事の見出し案を作って。大見出しを5個、それぞれに小見出しを2〜3個。読者は会社員30代で、副業未経験の人を想定」</td>
       </tr>
     </tbody>
   </table>
@@ -470,20 +480,20 @@
     <li><strong>「他の選択肢も3つ出して」</strong> → 1案しか出なくて比較したいとき</li>
   </ol>
 
-  <h2><span class="num">5</span>すぐ使えるテンプレート（コピペ用）</h2>
+  <h2><span class="num">5</span>すぐ使えるひな形（コピー用）</h2>
 
-  <h3>業務改善テンプレ</h3>
+  <h3>業務を楽にするひな形</h3>
 <pre class="prompt">私は【役割／業種】です。
 今、【何の業務】に【どれくらいの時間／頻度】かかっていて困っています。
 これをAIで効率化したいです。
 【最終的に欲しい成果物の形】で、3つほど方法を提案してください。</pre>
 
-  <h3>コンテンツ作成テンプレ</h3>
-<pre class="prompt">私は【役割】で、【ターゲット読者／顧客】に向けて【プラットフォーム】で発信しています。
+  <h3>投稿・文章作成のひな形</h3>
+<pre class="prompt">私は【役割】で、【届けたい読者／お客さん】に向けて【投稿先】で発信しています。
 【テーマ／商品】について、【字数・形式】で【本数】案を作ってください。
 トーンは【カジュアル／丁寧／専門的 など】でお願いします。</pre>
 
-  <h3>業務分析テンプレ</h3>
+  <h3>業務整理のひな形</h3>
 <pre class="prompt">私の業務は次の通りです:
 - 【業務A】: 月【N時間】
 - 【業務B】: 月【N時間】
@@ -496,7 +506,7 @@
   <div class="followup">
     <p style="margin-top:0">グループワークの30分でこれをやってみる:</p>
     <ol class="ol-clean">
-      <li>上のテンプレを1つ選ぶ</li>
+      <li>上のひな形を1つ選ぶ</li>
       <li>自分の業務で【】を全部埋める</li>
       <li>AIに送る</li>
       <li>返ってきた答えをグループで共有する</li>
@@ -520,7 +530,7 @@
     button.type = 'button';
     button.className = 'copy-template-btn';
     button.textContent = 'コピー';
-    button.setAttribute('aria-label', 'テンプレをコピー');
+    button.setAttribute('aria-label', 'ひな形をコピー');
     wrap.appendChild(button);
 
     button.addEventListener('click', async () => {

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Codeで何ができるか — 第4回 AI活用サポート オフ会</title>
+<style>
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #1f2937;
+    --color-muted: #6b7280;
+    --color-border: #e5e7eb;
+    --color-accent: #2563eb;
+    --color-accent-soft: #eff6ff;
+    --color-good: #15803d;
+    --color-good-soft: #ecfdf5;
+    --color-bad: #b91c1c;
+    --color-bad-soft: #fef2f2;
+    --color-code-bg: #f8fafc;
+    --color-highlight: #fef3c7;
+    --max-width: 780px;
+    --radius: 8px;
+    --font-jp: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+    --font-mono: 'SF Mono', 'Consolas', 'Menlo', monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-jp);
+    color: var(--color-text);
+    background: #f3f4f6;
+    margin: 0;
+    padding: 32px 16px;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .sheet {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    background: var(--color-bg);
+    padding: 48px 56px;
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
+  }
+
+  .back-to-index {
+    display: inline-block;
+    color: var(--color-accent);
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 18px;
+    text-decoration: none;
+  }
+  .back-to-index:hover,
+  .back-to-index:focus-visible {
+    text-decoration: underline;
+  }
+
+  header.doc-header {
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+  }
+  header.doc-header h1 {
+    font-size: 26px;
+    margin: 0 0 8px;
+    letter-spacing: 0.02em;
+    color: #111827;
+  }
+  header.doc-header .meta {
+    font-size: 13px;
+    color: var(--color-muted);
+  }
+
+  h2 {
+    font-size: 19px;
+    margin: 36px 0 14px;
+    padding: 6px 0 6px 12px;
+    border-left: 4px solid var(--color-accent);
+    color: #111827;
+  }
+  h2 .num {
+    color: var(--color-accent);
+    margin-right: 8px;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 16px;
+    margin: 22px 0 8px;
+    color: #1f2937;
+  }
+
+  p { margin: 8px 0; }
+  a {
+    color: var(--color-accent);
+    overflow-wrap: anywhere;
+  }
+
+  ul, ol {
+    margin: 8px 0 12px;
+    padding-left: 22px;
+  }
+  li { margin: 3px 0; }
+
+  .lead {
+    background: var(--color-accent-soft);
+    border-left: 4px solid var(--color-accent);
+    padding: 14px 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 0 0 28px;
+    font-size: 14.5px;
+  }
+  .lead strong { color: var(--color-accent); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    margin: 12px 0 18px;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid var(--color-border);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    word-break: break-word;
+  }
+  th {
+    background: #f9fafb;
+    font-weight: 600;
+    width: 50%;
+  }
+  .compare th.bad { background: var(--color-bad-soft); color: var(--color-bad); text-align: center; }
+  .compare th.good { background: var(--color-good-soft); color: var(--color-good); text-align: center; }
+  .compare td { color: var(--color-text); }
+
+  .icon {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: 700;
+    margin-right: 6px;
+    font-size: 13px;
+  }
+  .icon.bad { background: var(--color-bad); color: #fff; }
+  .icon.good { background: var(--color-good); color: #fff; }
+
+  .triple {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .triple .card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    background: #fafbfc;
+  }
+  .triple .card .label {
+    display: inline-block;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .triple .card h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+  }
+  .triple .card .examples {
+    font-size: 13.5px;
+    color: var(--color-muted);
+  }
+  .triple .card .examples li { margin: 2px 0; }
+
+  blockquote.full-example {
+    border-left: 4px solid var(--color-good);
+    background: var(--color-good-soft);
+    margin: 14px 0 8px;
+    padding: 14px 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 14.5px;
+    color: #064e3b;
+  }
+  blockquote.full-example strong { color: var(--color-good); }
+
+  pre.prompt {
+    background: var(--color-code-bg);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    color: #1f2937;
+    margin: 8px 0 18px;
+  }
+  pre.prompt::before {
+    content: "📋 コピーして使うひな形";
+    display: block;
+    font-family: var(--font-jp);
+    font-size: 11px;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .prompt-copy-wrap {
+    margin: 8px 0 18px;
+    position: relative;
+  }
+
+  .prompt-copy-wrap pre.prompt {
+    margin: 0;
+  }
+
+  .copy-template-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 1px solid var(--color-accent);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--color-accent);
+    cursor: pointer;
+    font-family: var(--font-jp);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 7px 10px;
+  }
+
+  .copy-template-btn:hover,
+  .copy-template-btn:focus-visible {
+    background: var(--color-accent-soft);
+  }
+
+  .copy-template-btn.copied {
+    background: var(--color-good);
+    border-color: var(--color-good);
+    color: #fff;
+  }
+
+  .ol-clean {
+    counter-reset: step;
+    list-style: none;
+    padding-left: 0;
+    margin: 12px 0;
+  }
+  .ol-clean li {
+    counter-increment: step;
+    position: relative;
+    padding: 8px 0 8px 36px;
+    margin: 4px 0;
+  }
+  .ol-clean li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 24px;
+    height: 24px;
+    background: var(--color-accent);
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .followup {
+    background: #f9fafb;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 12px 0;
+  }
+  .followup h3 { margin-top: 0; }
+  .followup p:last-child { margin-bottom: 0; }
+
+  .footer-note {
+    margin-top: 36px;
+    padding: 16px 18px;
+    background: var(--color-highlight);
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: #78350f;
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 16px 10px; }
+    .sheet { padding: 28px 20px; }
+    header.doc-header h1 { font-size: 23px; }
+    th, td { padding: 9px 8px; }
+  }
+
+  @media print {
+    body {
+      background: #fff;
+      padding: 0;
+      font-size: 11pt;
+      line-height: 1.6;
+    }
+    .sheet {
+      box-shadow: none;
+      max-width: none;
+      padding: 16mm 18mm;
+      border-radius: 0;
+    }
+    h2 { page-break-after: avoid; }
+    .copy-template-btn { display: none; }
+    pre.prompt, blockquote.full-example, .triple .card, .followup {
+      page-break-inside: avoid;
+    }
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <a class="back-to-index" href="index.html">← 教材一覧へ戻る</a>
+
+  <header class="doc-header">
+    <h1>Claude Codeで何ができるか—全体像と副業への活かし方</h1>
+    <div class="meta">第4回 AI活用サポート オフ会 配布資料 ／ 2026-05-05</div>
+  </header>
+
+  <p class="lead">
+    パソコンに入れて使うアプリを開いて話しかけるだけ。
+    この資料では、Claude Codeで今すぐ副業に使える<strong>「型」</strong>を5つ紹介します。
+  </p>
+
+  <h2><span class="num">1</span>Claude Codeって何？—よくある誤解と実際</h2>
+  <p>Claude Codeと聞くと、専門知識がある人向けのむずかしい道具を想像するかもしれません。実際は違います。</p>
+
+  <table class="compare">
+    <thead>
+      <tr>
+        <th class="bad"><span class="icon bad">✕</span>よくある思い込み</th>
+        <th class="good"><span class="icon good">✓</span>実際</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>むずかしい準備が必要</td>
+        <td>パソコンに入れて使うアプリをダウンロードして起動するだけ</td>
+      </tr>
+      <tr>
+        <td>パソコンやアプリに詳しい人しか使えない</td>
+        <td>副業者・個人事業主が日常業務に使える。むずかしい専門知識は不要</td>
+      </tr>
+      <tr>
+        <td>正確な命令文を書かないとダメ</td>
+        <td>日本語で「困っていること」を話しかけるだけでいい</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>パソコンに入れて使うアプリは <a href="https://claude.ai/download">https://claude.ai/download</a> からダウンロード。パソコンに入れた後は、メールアドレスでログインして起動するだけです。</p>
+
+  <h2><span class="num">2</span>できることの全体像</h2>
+  <p>Claude Codeでできることは、大きく3つの種類に分けられます。</p>
+
+  <div class="triple">
+    <div class="card">
+      <span class="label">① テキスト作成</span>
+      <h4>書く作業をまとめて頼む</h4>
+      <ul class="examples">
+        <li>Instagramなどの投稿文・商品説明文を複数パターン作る</li>
+        <li>問い合わせへの返信メールを下書きする</li>
+        <li>ブログ記事・企画書のたたき台を作る</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="label">② データ整理・分析</span>
+      <h4>表・集計・リストを整理してもらう</h4>
+      <ul class="examples">
+        <li>仕入れ価格と販売価格を管理する表を作る</li>
+        <li>売上・在庫・収支を見やすく整理する</li>
+        <li>アンケート結果や口コミをまとめる</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="label">③ ツール・アプリ作成</span>
+      <h4>業務専用の小道具を作ってもらう</h4>
+      <ul class="examples">
+        <li>計算できる入力欄や管理シートを、インターネットを見る画面で開けるページとして作る</li>
+        <li>繰り返し使える入力ページを作る</li>
+        <li>簡単なチェックリストページを作る</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="num">3</span>副業に効く5つの型</h2>
+  <p>どの業種でも使いやすい5つの型を紹介します。【】の部分を自分の内容に書き換えてそのまま使ってください。</p>
+
+  <ol class="ol-clean">
+    <li>
+      <strong>Instagramなどの投稿・商品説明をまとめて作る</strong> — 毎回ゼロから考えなくてよくなる
+<pre class="prompt">私は【業種・例：ハンドメイドアクセサリー作家】です。
+【Instagramの商品紹介投稿】を【週5本】作るのに毎回時間がかかっています。
+次の商品情報をもとに、そのまま投稿できる文章を3案作ってください。
+
+商品名：【例：天然石ピアス ローズクォーツ】
+素材：【例：天然石・金属パーツ】
+価格：【例：3,500円】
+アピールしたいポイント：【例：丸みのあるフォルムで耳元にやさしくフィット】</pre>
+    </li>
+    <li>
+      <strong>仕入れ・販売の管理表を作る</strong> — Excelに詳しくなくても作れる
+<pre class="prompt">私は【マルシェで花苗・寄植えを販売している】副業者です。
+仕入れた商品の管理が手書きのメモになっていて、集計に時間がかかっています。
+次の項目を管理できるExcelの表を、むずかしい設定なしで作ってください。
+
+管理したい項目：仕入れ日、商品名、仕入れ単価、仕入れ数、
+販売価格、売れた数、在庫数、売上合計（自動計算）</pre>
+    </li>
+    <li>
+      <strong>問い合わせ返信・定型メールを作る</strong> — 同じような文章を毎回書かなくてすむ
+<pre class="prompt">私は【フリマアプリでハンドメイド雑貨を販売している】副業者です。
+「【在庫の有無確認】」に関する問い合わせが週に何件か来ます。
+丁寧で自然な日本語の返信文のひな形を3パターン作ってください。
+【購入を促すものではなく、在庫状況を正直に伝えるトーン】で。</pre>
+    </li>
+    <li>
+      <strong>アイデア出し・壁打ちに使う</strong> — 一人でも考えが広がる
+<pre class="prompt">私は【コンサル副業】をしています。
+最近【新しいお客さんを増やすのに苦戦していて、声のかけ方を変えたい】と感じています。
+私の状況を踏まえて、取り組みやすい改善策を5つ提案してください。
+
+現在の状況：【Instagramなどで発信しているが反応が少ない。今のお客さんからの紹介が多い】
+強み：【作業時間を短くした実績あり。企業向けの対応が得意】</pre>
+    </li>
+    <li>
+      <strong>業務の流れを整理して時短ポイントを見つける</strong> — どこを任せられるか見える形にできる
+<pre class="prompt">私は【物販副業（仕入れ→出品→発送）】をしています。
+毎月繰り返している作業を書き出しました。
+AIが手伝えそうな作業と、人がやるべき作業に分類してください。
+また、AIに頼むと一番時間が短縮できる作業を1つ教えてください。
+
+繰り返し作業リスト：
+仕入れリサーチ、写真撮影、商品説明文作成、価格調査、
+出品作業、問い合わせ返信、梱包・発送、売上集計、確定申告準備</pre>
+    </li>
+  </ol>
+
+  <h2><span class="num">4</span>簡単なツール・アプリを作る</h2>
+  <p>「アプリを作る」というと難しそうに聞こえますが、Claude Codeに頼めば日本語で説明するだけで作れます。ツール作成体験のグループでは、これを実際に試します。</p>
+  <p>下は、マルシェの仕入れ管理を題材にした例です。</p>
+
+  <blockquote class="full-example">
+    <strong>私はマルシェで花苗・寄植えを販売している副業の花屋です。</strong><br>
+    毎回の仕入れで「何をいくらで仕入れて、いくらで売ったか」が手書きになっています。<br>
+    インターネットを見る画面で開けるシンプルな仕入れ管理ページを作ってください。<br>
+    入力：仕入れ日、商品名、仕入れ単価、仕入れ数、販売価格<br>
+    表示：入力した内容の一覧と、売上合計の自動計算<br>
+    保存ボタンは不要で、ページを開いている間だけ使えれば十分です。
+  </blockquote>
+
+  <p>このくらい具体的に頼むと、Claude Codeはそのままインターネットを見る画面で開けるファイルを出力してくれます。スタンプ・素材・簡単な案内ページも同じ方法で作れます（ツール作成体験のグループで試します）。</p>
+
+  <h2><span class="num">5</span>今日のグループワークでやること</h2>
+  <div class="followup">
+    <p style="margin-top:0">ここからグループに分かれて30分、手を動かします。</p>
+    <h3>Aグループ：ツール作成体験</h3>
+    <p>メンバー: いづみ、よっちゃん、ふみの、なお🍊</p>
+    <p>テーマ:「簡単なアプリ・スタンプを一緒に作る」</p>
+    <p>目標: Claude Codeに頼んで、何か1つ動くものを作る</p>
+
+    <h3>Bグループ：業務を楽にする体験</h3>
+    <p>メンバー: まなんちゃん（運営者がサポート）</p>
+    <p>テーマ:「マルシェの仕入れ管理をAIに頼む」</p>
+    <p>目標: 「副業に効く5つの型」にある「仕入れ・販売の管理表を作る」または「業務の流れを整理して時短ポイントを見つける」を、自分の業務で試す</p>
+
+    <p><strong>詰まったら隣の人か運営者に声をかけてください。完璧な指示でなくていい。</strong></p>
+  </div>
+
+  <div class="footer-note">
+    💡 今日ひとつだけ、自分の業務でAIに頼んでみる。完璧な指示でなくていい。
+  </div>
+
+</div>
+<script>
+  document.querySelectorAll('pre.prompt').forEach((prompt) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'prompt-copy-wrap';
+    prompt.parentNode.insertBefore(wrap, prompt);
+    wrap.appendChild(prompt);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'copy-template-btn';
+    button.textContent = 'コピー';
+    button.setAttribute('aria-label', 'ひな形をコピー');
+    wrap.appendChild(button);
+
+    button.addEventListener('click', async () => {
+      const text = prompt.textContent.trim();
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          textarea.remove();
+        }
+
+        button.textContent = 'コピー済み';
+        button.classList.add('copied');
+        window.setTimeout(() => {
+          button.textContent = 'コピー';
+          button.classList.remove('copied');
+        }, 1600);
+      } catch (error) {
+        button.textContent = '失敗';
+        window.setTimeout(() => {
+          button.textContent = 'コピー';
+        }, 1600);
+      }
+    });
+  });
+</script>
+</body>
+</html>
